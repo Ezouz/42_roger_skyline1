@@ -11,17 +11,8 @@ $ apt-get install vim
 $ apt-get install -y mailutils
 $ apt-get install -y ssmtp
 
-
-$ apt-get install net-tools
-$ apt-get install dnsutils
-$ apt-get install iptables-persistent
-
-Install web packages
-$ apt-get install apache2
-$ apt-get install mysql-server
-$ apt-get install mysql-client
-$ apt-get install phpmyadmin
-$ apt-get install apt-transport-https ca-certificates curl software-properties-common
+Check running services
+$ service --status-all
 
 Add a non-root user
 $ sudo adduser ehouzard
@@ -40,3 +31,5 @@ $ visudo
 '
   ehouzard ALL=(ALL:ALL) NOPASSWD:ALL
 '
+
+
