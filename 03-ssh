@@ -1,0 +1,41 @@
+On remote-host
+
+Install ssh
+$ sudo apt install ssh
+
+Edit file
+uncomment '# Port 22' : change the number > 2223
+$ sudo vim /etc/ssh/sshd_config
+
+Enable ssh
+$ sudo systemctl enable ssh
+
+Restart service
+$ sudo service ssh restart
+
+Firewall setup
+$ sudo ufw allow 2223/tcp
+$ sudo ufw default deny incoming
+$ sudo ufw default allow outgoing
+$ sudo ufw enable
+
+To enable ssh key login, uncomment
+'
+  #PubkeyAuthentication yes
+  #AuthorizedKeysFile .ssh/authorized_keys
+' in
+$ sudo vim /etc/ssh/sshd_config
+
+-------------------------------------------------------------------
+On host
+
+Configure portforwarding of vm / 2223
+
+Generate keygen : passphrase=passphrase
+$ ssh-keygen
+
+Copy the key
+$ ssh-copy-id
+
+Connect to remote-host via ssh
+$ ssh ehouzard@192.168.56.1 -p2223

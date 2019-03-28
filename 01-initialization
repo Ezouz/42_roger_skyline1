@@ -1,0 +1,42 @@
+be root
+$ sudo -s
+
+Update sources and packages
+$ apt-get update
+$ apt-get upgrade
+
+Install needed packages
+$ apt-get install sudo
+$ apt-get install vim
+$ apt-get install -y mailutils
+$ apt-get install -y ssmtp
+
+
+$ apt-get install net-tools
+$ apt-get install dnsutils
+$ apt-get install iptables-persistent
+
+Install web packages
+$ apt-get install apache2
+$ apt-get install mysql-server
+$ apt-get install mysql-client
+$ apt-get install phpmyadmin
+$ apt-get install apt-transport-https ca-certificates curl software-properties-common
+
+Add a non-root user
+$ sudo adduser ehouzard
+
+Add user to sudoers
+$ sudo usermod -a -G sudo ehouzard
+
+Switch to new user
+$ su - ehouzard
+
+Check
+$ whoami
+
+Edit sudoers file to avoid entering password each time sudo is used by adding following line
+$ visudo
+'
+  ehouzard ALL=(ALL:ALL) NOPASSWD:ALL
+'

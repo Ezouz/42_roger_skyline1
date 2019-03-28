@@ -1,0 +1,26 @@
+Power off the vm
+in virtualbox menu
+  > File > Host network manager... > create + disable dhcp + set mask 255.255.255.252 and close
+
+in virtualbox vm
+  > settings > Network > set Adapter 2 attached to 'Host-only Adapter' name vboxnet0 as set before
+
+Change conf via netplan
+$ sudo nano /etc/netplan/50-cloud-init.yaml
+'
+network:
+    ethernets:
+        enp0s3:
+            dhcp4: true
+        enp0s8:
+            dhcp4: no
+            addresses: [192.168.56.1/30]
+            gateway4: 192.168.1.1
+    version: 2
+'
+$ sudo netplan apply
+
+To check
+$ sudo route -n
+||
+$ ip a

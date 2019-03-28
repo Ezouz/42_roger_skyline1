@@ -1,0 +1,51 @@
+Add following script to /etc/cron.d/packages.sh
+'
+  #!/bin/bash
+  date >> /var/log/update_script.log
+  apt-get update -y >> /var/log/update_script.log
+  apt-get upgrade -y >> /var/log/update_script.log
+'
+$ sudo chmod +x packages.sh
+
+Add following script to /etc/cron.d/scripts/survey.sh
+'
+  #!/bin/bash
+
+  OLDSUM=`cat /var/lib/cron.md5`
+  NEWSUM=`md5sum /etc/crontab`
+
+  if [ "$OLDSUM" != "$NEWSUM" ]
+  then
+          md5sum /etc/crontab > /var/lib/cron.md5
+    echo "Subject: crontab has been modified" | sudo /usr/sbin/sendmail root
+  fi
+'
+$ sudo chmod +x survey.sh
+
+Edit /etc/ssmtp/revaliases
+$ vim /etc/ssmtp/revaliases
+'
+root:username@ethereal.email:smtp.ethereal.email:587
+'
+# root:brooks29@ethereal.email:smtp.ethereal.email:587
+
+Edit /etc/ssmtp/ssmtp.conf
+$ vim /etc/ssmtp/ssmtp.conf
+'
+  root=username@ethereal.email
+  mailhub:smtp.ethereal.email:587
+  UseSTARTTLS=YES
+  FromLineOverride=YES
+  AuthUser=ethereal_account_username
+  AuthPass=ethereal_account_password
+'
+# AuthUser=brooks29@ethereal.email
+# AuthPass=VhFABaMekK2UsNkCdf
+
+Install a new crontab
+$ sudo crontab -e
+add '
+0 4 * * 1 sh /etc/cron.d/scripts/packages.sh
+@reboot sh /etc/cron.d/scripts/packages.sh
+0 0 * * * /etc/cron.d/survey.sh
+'
