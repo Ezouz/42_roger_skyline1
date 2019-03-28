@@ -33,3 +33,15 @@ $ visudo
 '
 
 
+
+
+
+
+
+
+Install web packages
+$ apt-get install apache2
+$ apt-get install mysql-server
+$ apt-get install mysql-client
+$ apt-get install phpmyadmin
+$ apt-get install apt-transport-https ca-certificates curl software-properties-common

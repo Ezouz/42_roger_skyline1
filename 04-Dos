@@ -1,0 +1,12 @@
+Install
+$ sudo apt-get install -y fail2ban
+
+Add this to jail.conf
+$ sudo vim /etc/fail2ban/jail.conf
+'
+  [sshd]
+  enabled = true
+  port    = 2223
+  logpath = %(sshd_log)s
+  backend = %(sshd_backend)s
+'
