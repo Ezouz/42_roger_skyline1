@@ -11,5 +11,7 @@ $ sudo vim /etc/fail2ban/jail.conf
   backend = %(sshd_backend)s
 '
 
+Check service status
+$ sudo service status fail2ban
 Check who's banned
 $ sudo fail2ban-client status sshd
