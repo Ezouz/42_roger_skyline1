@@ -2,14 +2,14 @@ Install
 $ sudo apt-get install -y portsentry
 
 Set Portsentry to auto mode
-$ sudo vi /etc/default/portsentry
+$ sudo vim /etc/default/portsentry
 '
   TCP_MODE="atcp"
   UDP_MODE="audp"
 '
 
 Block when detecting attack
-$ sudo vi /etc/portsentry/portsentry.conf
+$ sudo vim /etc/portsentry/portsentry.conf
 '
   BLOCK_UDP="1"
   BLOCK_TCP="1"

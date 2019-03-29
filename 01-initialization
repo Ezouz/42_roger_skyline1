@@ -10,6 +10,8 @@ $ apt-get install sudo
 $ apt-get install vim
 $ apt-get install -y mailutils
 $ apt-get install -y ssmtp
+$ apt-get install ssh
+$ apt-get install ufw
 
 Check running services
 $ service --status-all
@@ -31,17 +33,3 @@ $ visudo
 '
   ehouzard ALL=(ALL:ALL) NOPASSWD:ALL
 '
-
-
-
-
-
-
-
-
-Install web packages
-$ apt-get install apache2
-$ apt-get install mysql-server
-$ apt-get install mysql-client
-$ apt-get install phpmyadmin
-$ apt-get install apt-transport-https ca-certificates curl software-properties-common

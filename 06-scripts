@@ -25,7 +25,7 @@ $ sudo chmod +x survey.sh
 Edit /etc/ssmtp/revaliases
 $ vim /etc/ssmtp/revaliases
 '
-root:username@ethereal.email:smtp.ethereal.email:587
+  root:username@ethereal.email:smtp.ethereal.email:587
 '
 # root:brooks29@ethereal.email:smtp.ethereal.email:587
 
@@ -45,7 +45,7 @@ $ vim /etc/ssmtp/ssmtp.conf
 Install a new crontab
 $ sudo crontab -e
 add '
-0 4 * * 1 sh /etc/cron.d/scripts/packages.sh
-@reboot sh /etc/cron.d/scripts/packages.sh
-0 0 * * * /etc/cron.d/survey.sh
+  0 4 * * 1 sh /etc/cron.d/scripts/packages.sh
+  @reboot sh /etc/cron.d/scripts/packages.sh
+  0 0 * * * /etc/cron.d/survey.sh
 '

@@ -1,8 +1,5 @@
 On remote-host
 
-Install ssh
-$ sudo apt install ssh
-
 Edit file
 uncomment '# Port 22' : change the number > 2223
 $ sudo vim /etc/ssh/sshd_config

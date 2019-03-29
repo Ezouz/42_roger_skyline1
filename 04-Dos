@@ -10,3 +10,6 @@ $ sudo vim /etc/fail2ban/jail.conf
   logpath = %(sshd_log)s
   backend = %(sshd_backend)s
 '
+
+Check who's banned
+$ sudo fail2ban-client status sshd
