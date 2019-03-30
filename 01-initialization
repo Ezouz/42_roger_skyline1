@@ -13,9 +13,6 @@ $ apt-get install -y ssmtp
 $ apt-get install ssh
 $ apt-get install ufw
 
-Check running services
-$ service --status-all
-
 Add a non-root user
 $ sudo adduser ehouzard
 
@@ -35,13 +32,23 @@ $ visudo
 '
 
 // Memo
+Check disk partitions
+$  sudo fdisk -l
 
 Check if up to date
 $ apt list --upgradable
 $ apt list --installed
+
+Check running services
+$ service --status-all
 
 Lister open ports
 $ sudo netstat -tlnpu
 
 Check if a package is installed
 $ dpkg -l {package_name}
+
+// MEMO copy .ssh directory
+
+$ sudo chown username file
+$ sudo chgrp username file
