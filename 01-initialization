@@ -33,3 +33,15 @@ $ visudo
 '
   ehouzard ALL=(ALL:ALL) NOPASSWD:ALL
 '
+
+// Memo
+
+Check if up to date
+$ apt list --upgradable
+$ apt list --installed
+
+Lister open ports
+$ sudo netstat -tlnpu
+
+Check if a package is installed
+$ dpkg -l {package_name}

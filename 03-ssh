@@ -32,7 +32,7 @@ Generate keygen : passphrase=passphrase
 $ ssh-keygen
 
 Copy the key
-$ ssh-copy-id
+$ ssh-copy-id ehouzard@ip
 
 Connect to remote-host via ssh
 $ ssh ehouzard@192.168.56.1 -p2223
