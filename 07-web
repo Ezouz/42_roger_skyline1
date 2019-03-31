@@ -1,3 +1,44 @@
+IF SERVER APACHE
+
+Install and allow Apache
+$ sudo apt-get install apache2 openssl
+$ sudo ufw allow 'WWW Full'
+
+sudo apachectl configtest
+sudo a2enmod ssl
+
+Create auto-signed ssl
+$ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache.key -out /etc/ssl/certs/apache.crt
+
+Rendre la redirection de http vers https permanante
+$ sudo vim /etc/apache2/sites-available/000-default.conf
+'
+  Redirect permanent "/" "https://10.12.11.35"
+'
+$ sudo a2ensite 000-default
+$ sudo service apache2 restart
+
+Propose a vitrine website
+$ cd /var/www
+$ sudo apt-get install curl -y
+$ sudo curl -o vitrine.zip  "http://www.frugalprototype.com/wp-content/uploads/2015/11/vitrine.zip"
+$ unzip vitrine.zip
+
+$ sudo cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/vitrinewebsite.conf
+$ sudo vim /etc/apache2/sites-available/vitrinewebsite.conf
+'
+		ServerName 10.12.11.35
+		DocumentRoot /var/www/vitrinewebsite
+
+    SSLCertificateFile	/etc/ssl/certs/apache.crt
+		SSLCertificateKeyFile /etc/ssl/private/apache.key
+'
+$ sudo a2ensite vitrinewebsite.conf
+$ sudo systemctl restart apache2
+
+---------------------------------------------------------------------------------------------------------------------
+IF SERVER NGINX --
+
 Install and allow Nginx
 $ sudo apt-get install -y -qq nginx openssl
 $ sudo ufw allow 'Nginx Full'
@@ -76,3 +117,4 @@ $ cd /var/www/html
 $ sudo curl -o vitrine.zip  "http://www.frugalprototype.com/wp-content/uploads/2015/11/vitrine.zip"
 $ unzip vitrine.zip
 Move the content into a /landing directory
+

@@ -11,19 +11,26 @@ Restart service
 $ sudo service ssh restart
 
 Firewall setup
+$ sudo ufw status
+$ sudo ufw enable
 $ sudo ufw allow 2223/tcp
 $ sudo ufw default deny incoming
 $ sudo ufw default allow outgoing
-$ sudo ufw enable
+$ sudo ufw reload
 
-To enable ssh key login, uncomment
+To enable ssh key login, edit
+$ sudo vim /etc/ssh/sshd_config
 '
   #PubkeyAuthentication yes
   #AuthorizedKeysFile .ssh/authorized_keys
-' in
-$ sudo vim /etc/ssh/sshd_config
+  #PermitRootLogin no
+  #PasswordAuthentication no
+'
 
--------------------------------------------------------------------
+Restart service
+$ sudo service ssh restart
+
+---------------------------------------------------------------------------------------------------------------------
 On host
 
 Configure portforwarding of vm / 2223
@@ -33,6 +40,8 @@ $ ssh-keygen
 
 Copy the key
 $ ssh-copy-id ehouzard@ip
+-i ~/.ssh/id_rsa_roger
 
 Connect to remote-host via ssh
 $ ssh ehouzard@192.168.56.1 -p2223
+# ezouz@10.12.11.35

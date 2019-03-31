@@ -1,21 +1,75 @@
-Install
-$ sudo apt-get install -y fail2ban
+IF Apache server --
 
-Add this to jail.conf
-$ sudo vim /etc/fail2ban/jail.conf
+Add a new file to jail.local
+$ sudo vim /etc/fail2ban/jail.local
 '
-  banaction = ufw
+  [DEFAULT]
+  destemail = youraccount@email.com
+  sendername = Fail2BanAlerts
 
-  [sshd]
+  [recidive]
   enabled = true
-  port    = 2223
-  logpath = %(sshd_log)s
-  backend = %(sshd_backend)s
-'
-+ enable on nginx
 
+  [apache]
+  enabled = true
+  port = http, https
+  filter = apache-auth
+  logpath = /var/log/apache2*/*error.log
+  maxretry = 6
+  findtime = 600
+
+  [apache-noscript]
+  enabled = true
+
+  [apache-overflows]
+  enabled  = true
+  port     = http,https
+  filter   = apache-overflows
+  logpath  = /var/log/apache2*/*error.log
+  maxretry = 2
+
+  [apache-badbots]
+  enabled  = true
+  port     = http,https
+  filter   = apache-badbots
+  logpath  = /var/log/apache2*/*error.log
+  maxretry = 2
+'
+
+Edit, add to
+$ sudo vim /etc/ufw/before.rules
+'
+  # Enter rule
+  -A ufw-before-input -p tcp --dport 80 -j ufw-WWW
+  -A ufw-before-input -p tcp --dport 443 -j ufw-WWW
+
+  # Limit connections per Class C
+  -A ufw-http -p tcp --syn -m connlimit --connlimit-above 50 --connlimit-mask 24 -j ufw-http-logdrop
+
+  # Limit connections per IP
+  -A ufw-http -m state --state NEW -m recent --name conn_per_ip --set
+  -A ufw-http -m state --state NEW -m recent --name conn_per_ip --update --seconds 10 --hitcount 20 -j ufw-http-logdrop
+
+  # Limit packets per IP
+  -A ufw-http -m recent --name pack_per_ip --set
+  -A ufw-http -m recent --name pack_per_ip --update --seconds 1 --hitcount 20 -j ufw-http-logdrop
+
+  # Finally accept
+  -A ufw-http -j ACCEPT
+
+  # Log
+  -A ufw-http-logdrop -m limit --limit 3/min --limit-burst 10 -j LOG --log-prefix "[UFW HTTP DROP] "
+  -A ufw-http-logdrop -j DROP
+'
+$ sudo ufw reload
 
 Check service status
 $ sudo service status fail2ban
 Check who's banned
 $ sudo fail2ban-client status sshd
+
+To see blocked attack
+$ sudo journalctl -xe
+
+---------------------------------------------------------------------------------------------------------------------
+No good answer for nginx...

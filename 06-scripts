@@ -1,4 +1,5 @@
-Add following script to /etc/cron.d/packages.sh
+Add following script to /etc/cron.d/scripts/packages.sh
+&& to /etc/init.d/update.sh
 '
   #!/bin/bash
   date >> /var/log/update_script.log
@@ -16,7 +17,7 @@ Add following script to /etc/cron.d/scripts/survey.sh
 
   if [ "$OLDSUM" != "$NEWSUM" ]
   then
-          md5sum /etc/crontab > /var/lib/cron.md5
+    md5sum /etc/crontab > /var/lib/cron.md5
     echo "Subject: crontab has been modified" | sudo /usr/sbin/sendmail root
   fi
 '
@@ -47,5 +48,5 @@ $ sudo crontab -e
 add '
   0 4 * * 1 sh /etc/cron.d/scripts/packages.sh
   @reboot sh /etc/cron.d/scripts/packages.sh
-  0 0 * * * /etc/cron.d/survey.sh
+  0 0 * * * /etc/cron.d/scripts/survey.sh
 '

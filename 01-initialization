@@ -1,23 +1,29 @@
-be root
-$ sudo -s
+$ sudo -i | su
+
+#if debian
+Comment deb cd-rom
+$ apt edit-sources
 
 Update sources and packages
 $ apt-get update
-$ apt-get upgrade
+$ apt-get upgrade -y
 
 Install needed packages
 $ apt-get install sudo
 $ apt-get install vim
-$ apt-get install -y mailutils
-$ apt-get install -y ssmtp
-$ apt-get install ssh
+$ apt-get install net-tools
 $ apt-get install ufw
+$ sudo apt-get install -y fail2ban
+$ sudo apt-get install -y portsentry
+$ apt-get install -y ssmtp
+
+$ apt-get install -y mailutils
 
 Add a non-root user
 $ sudo adduser ehouzard
 
 Add user to sudoers
-$ sudo usermod -a -G sudo ehouzard
+sudo adduser ehouzard sudo
 
 Switch to new user
 $ su - ehouzard
@@ -25,7 +31,7 @@ $ su - ehouzard
 Check
 $ whoami
 
-Edit sudoers file to avoid entering password each time sudo is used by adding following line
+# Edit sudoers file to avoid entering password each time sudo is used by adding following line
 $ visudo
 '
   ehouzard ALL=(ALL:ALL) NOPASSWD:ALL
@@ -43,7 +49,7 @@ Check running services
 $ service --status-all
 
 Lister open ports
-$ sudo netstat -tlnpu
+$ sudo netstat -paunt
 
 Check if a package is installed
 $ dpkg -l {package_name}

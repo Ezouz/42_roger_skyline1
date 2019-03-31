@@ -1,5 +1,20 @@
+IF DEBIAN --
+
+Change network interface to brige
+$ sudo vim /etc/network/interface
+'
+  allow enp0s3 blabla static
+    address: 10.1(étage).(rangée).(ip > 35)
+    gateway: 10.12.254.254
+    netmask: 255.255.255.252 (/30)
+    nameserver: 8.8.8.8 (gougle)
+'
+
+---------------------------------------------------------------------------------------------------------------------
+IF UBUNTU --
+
 Power off the vm
-in virtualbox menu
+In virtualbox menu
   > File > Host network manager... > create + disable dhcp + set mask 255.255.255.252 and close
 
 In virtualbox vm

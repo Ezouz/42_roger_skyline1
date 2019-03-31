@@ -1,6 +1,3 @@
-Install
-$ sudo apt-get install -y portsentry
-
 Set Portsentry to auto mode
 $ sudo vim /etc/default/portsentry
 '
@@ -10,9 +7,20 @@ $ sudo vim /etc/default/portsentry
 
 Block when detecting attack
 $ sudo vim /etc/portsentry/portsentry.conf
+Change
 '
   BLOCK_UDP="1"
   BLOCK_TCP="1"
+'
+Add line
+'
+  KILL_RUN_CMD=""/sbin/iptables -I INPUT -s $TARGET$ \
+  -j DROP && /sbin/iptables -I INPUT -s $TARGET$ -m limit --limit 3/minute \
+  --limit-burst 5 -j LOG --log-level debug --log-prefix 'Portsentry: dropping: '"
+'
+Uncomment
+'
+  PORT_BANNER="** UNAUTHORIZED ACCESS PROHIBITED *** YOUR CONNECTION ATTEMPT HAS BEEN LOGGED. GO AWAY."
 '
 
 Check service status
