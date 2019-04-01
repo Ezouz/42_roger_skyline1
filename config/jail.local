@@ -1,0 +1,25 @@
+[DEFAULT]
+destemail = brooks29@ethereal.email
+sendername = Fail2BanAlerts
+
+[sshd]
+enabled = true
+port    = 2222
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+
+[nginx-http-auth]
+enabled = true
+port    = http,https
+logpath = %(nginx_error_log)s
+
+[nginx-limit-req]
+enabled = true
+port    = http,https
+logpath = %(nginx_error_log)s
+
+[nginx-botsearch]
+enabled = true
+port     = http,https
+logpath  = %(nginx_error_log)s
+maxretry = 2

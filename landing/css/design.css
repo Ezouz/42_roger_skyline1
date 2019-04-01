@@ -1,0 +1,134 @@
+/*
+Pour changer la couleur de fond des sections, changer "background: #xxxxxx;" par la couleur voulue dans la section correspondante.
+Pour changer la couleur du texte, changer "color : #xxxxx" dans la section correspondante.
+*/
+
+
+/*
+The fixed navbar will overlay your other content, unless you add padding to the top of the <body>. 
+Try out your own values or use our snippet below. 
+Tip: By default, the navbar is 50px high.
+*/
+body { 
+     overflow-x: hidden;
+    padding-top: 50px; 
+    padding-bottom: 50px; 
+
+}
+
+
+/* NAVIGATION */
+
+#brand {
+    font-size : 1.5em; 
+}
+
+#navbar {
+    font-size: 1.2em;
+    font-weight: 600; 
+}
+
+/*
+
+Pour changer la couleur du bandeau de navigation, enlever les commentaires " /*"
+
+nav.navbar.navbar-default.navbar-fixed-top {
+    background: #xxxxx;
+    border-color: #xxxxx;
+}
+
+
+*/
+
+/* SECTION */
+
+section {
+
+    min-height: 800px; 
+    padding-top: 50px;
+
+}
+
+/* SECTION PRINCIPALE */
+
+#mainsection {
+    padding-top: 50px; 
+    background: url(../images/pexels-photo.jpg); 
+    min-height: 750px; 
+    background-position: center; 
+}
+
+
+.intro-message {
+    text-align: center; 
+    color: white; 
+    font-size: 3em; 
+}
+
+
+.social-icon a {
+    color:white; 
+}
+
+.social-icon a:hover {
+    color : #2c3e50; 
+}
+
+.fa-stack {
+    font-size: 0.6em;
+}
+
+
+
+/* SECTION SERVICES */
+#section1 {
+    background: #f1f1f1; 
+}
+
+
+
+.services-block {
+    width: 100%;
+    border: solid 2px rgba(33, 32, 32, 0.08); 
+    border-radius : 10px; 
+    margin-top : 30px; 
+    margin-bottom : 30px; 
+    margin-right: 60px; 
+}
+
+.icon-services {
+    padding-top : 30px;
+    color : #2c3e50; 
+}
+
+
+
+
+/* SECTION CONTACT */
+#contact {
+ padding-top : 80px; 
+    background: #111111; 
+    height :500px; 
+}
+
+
+.contact-info{
+     background: #111111; 
+    color : white; 
+    height: 50px; 
+    font-size: 1.1em;
+    padding-top : 10px; 
+}
+
+
+
+/*BAS DE PAGE : FOOTER*/
+
+#footer {
+    margin-top : 20px; 
+    font-size: 1.3em; 
+    background: transparent; 
+    border-color:transparent; 
+}
+
+

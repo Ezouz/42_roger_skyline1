@@ -25,3 +25,4 @@ Uncomment
 
 Check service status
 $ sudo service portsentry status
+$ sudo service portsentry restart

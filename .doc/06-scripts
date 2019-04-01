@@ -1,5 +1,5 @@
 Add following script to /etc/cron.d/scripts/packages.sh
-&& to /etc/init.d/update.sh
+# /etc/init.d/update.sh
 '
   #!/bin/bash
   date >> /var/log/update_script.log

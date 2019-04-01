@@ -16,8 +16,8 @@ $ apt-get install ufw
 $ sudo apt-get install -y fail2ban
 $ sudo apt-get install -y portsentry
 $ apt-get install -y ssmtp
-
 $ apt-get install -y mailutils
+$ sudo apt-get install -y nginx openssl
 
 Add a non-root user
 $ sudo adduser ehouzard

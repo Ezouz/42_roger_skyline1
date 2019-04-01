@@ -39,8 +39,7 @@ $ sudo systemctl restart apache2
 ---------------------------------------------------------------------------------------------------------------------
 IF SERVER NGINX --
 
-Install and allow Nginx
-$ sudo apt-get install -y -qq nginx openssl
+Allow Nginx connections
 $ sudo ufw allow 'Nginx Full'
 
 Create auto-signed ssl

@@ -33,7 +33,7 @@ $ sudo service ssh restart
 ---------------------------------------------------------------------------------------------------------------------
 On host
 
-Configure portforwarding of vm / 2223
+# Configure portforwarding of vm / 2223
 
 Generate keygen : passphrase=passphrase
 $ ssh-keygen
