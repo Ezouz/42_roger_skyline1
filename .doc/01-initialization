@@ -58,3 +58,7 @@ $ dpkg -l {package_name}
 
 $ sudo chown username file
 $ sudo chgrp username file
+
+// MEMO
+See config used by fail2ban-server
+$ fail2ban-client -d

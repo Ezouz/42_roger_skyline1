@@ -39,6 +39,18 @@ ufw enable
 echo "\033[33mUFW firewall status\033[0m"
 ufw status
 
+# Against DDOS
+# add filters and edit nginx.conf
+echo "\033[33mSetting up nginx...\033[0m"
+cp config/nginx.conf /etc/nginx/nginx.conf
+chmod 644 /etc/nginx/nginx.conf
+cp config/nginx-conn-limit.conf /etc/fail2ban/filter.d/
+cp config/nginx-req-limit.conf /etc/fail2ban/filter.d/
+chmod 644 /etc/fail2ban/filter.d/nginx-conn-limit.conf
+chmod 644 /etc/fail2ban/filter.d/nginx-req-limit.conf
+echo "\033[33mReload nginx configuration\033[0m"
+service nginx restart
+
 # Fail2ban
 echo "\033[33mSetting up Fail2ban...\033[0m"
 cp config/jail.local /etc/fail2ban/
@@ -46,7 +58,7 @@ chmod 644 /etc/fail2ban/jail.local
 echo "\033[33mReload Fail2ban configuration\033[0m"
 fail2ban-client reload
 echo "\033[33mFail2ban status\033[0m"
-service status fail2ban
+service fail2ban status
 
 # for ports scan
 echo "\033[33mSetting up default/portsentry...\033[0m"
@@ -57,7 +69,7 @@ chmod 644 /etc/portsentry/portsentry.conf
 echo "\033[33mReload Portsentry configuration\033[0m"
 service portsentry restart
 echo "\033[Portsentry status\033[0m"
-service status portsentry
+service portsentry status
 
 # configure mail to root
 echo "\033[33mSetting up root emails\033[0m"
