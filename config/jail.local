@@ -1,6 +1,7 @@
 [DEFAULT]
 destemail = brooks29@ethereal.email
 sendername = Fail2BanAlerts
+banaction = ufw
 
 [sshd]
 enabled = true

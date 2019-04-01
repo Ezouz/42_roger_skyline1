@@ -4,7 +4,7 @@ echo "\033[33mYOU MUST BE ROOT TO PERFORM THIS OPERATION\033[0m"
 echo"\033[31mPlease enter your personal username:\033[0m"
 read PERSO
 read -p "Configuration for $PERSO, press enter"
-
+sudo adduser $PERSO
 # update system
 echo "\033[33mAPT update/upgrade & installation of required packages\033[0m"
 apt-get update && apt-get upgrade -y
@@ -83,34 +83,34 @@ echo "0 0 * * * /etc/cron.d/scripts/survey.sh" >> mycron
 crontab mycron
 rm mycron
 
-echo "\n\nPlease complete the SSH configuration for the public key authentication by following those guidelines.\n
-On host: \n
-  - if you already have public keys juste type (without the $)\n
-$ ssh-copy-id $PERSO@192.168.56.2\n
-[that hostname is corresponding to our setup\n"
+echo "\033[33mAutomatic configuration done\033[0m"
+echo "\033[33m\n\nPlease complete the SSH configuration for the public key authentication by following those guidelines.\n\033[0m"
+echo "-- run the command without the $ --
+On host:
+$ ssh-keygen
+$ ssh-copy-id $PERSO@192.168.56.2
+or copy the key manually into ~/.ssh/Authorized_keys file
+[that hostname is corresponding to our setup]"
 ip a | grep enp0s8| grep inet
-echo "]\n
-  - else first do
-$ ssh-keygen\n
-and then do the step above - or copy the key manually into ~/.ssh/Authorized_keys file\n\n"
-echo "When it's done, to enable ssh public key login, edit /etc/ssh/sshd_config file\n
-$ sudo vim /etc/ssh/sshd_config\n
-uncomment and change those lines\n
-  #PubkeyAuthentication yes\n
-  #AuthorizedKeysFile .ssh/authorized_keys\n
-  #PermitRootLogin no\n
-  #PasswordAuthentication no\n\n
-then Restart service\n
-$ sudo service ssh restart\n\n
-You can now connect to remote-host via ssh by typing\n
-$ $PERSO@192.168.56.2 -p2223\n
+echo "When it's done, to enable ssh public key login, edit /etc/ssh/sshd_config file
+$ sudo vim /etc/ssh/sshd_config
+uncomment and change those lines
+  #PubkeyAuthentication yes
+  #AuthorizedKeysFile .ssh/authorized_keys
+  #PermitRootLogin no
+  #PasswordAuthentication no
+then Restart service
+$ sudo service ssh restart
+You can now connect to remote-host via ssh by typing
+$ $PERSO@192.168.56.2 -p2223
 "
 
-echo "\033[33mAutomatic configuration done\n
-On VirtualBox: setup a fixed IP with a subnet-netmask /30\n
-- Go to File > Host network manager\n
-- Create a Vboxnet#, disabled DHCP checkbox and set iPv4 Network Mask to 255.255.255.252\n
-[the simplest way - the fixed ip set should be 192.168.56.1]\n\n
-- Shutdown VM to do this last step, in VB settings of this vm:\n
-    Settings > Network > adapter 2 > check 'enable network adapter' and chose the Vboxnet# you just created\n
-Then reboot, stop undesired services and execute part2.sh !\n"
+echo "\033[33mOn VirtualBox: setup a fixed IP with a subnet-netmask /30\033[0m"
+echo "- Go to File > Host network manager
+- Create a Vboxnet#, disabled DHCP checkbox and set iPv4 Network Mask to 255.255.255.252
+[the simplest way - the fixed ip set should be 192.168.56.1]\n
+- Shutdown VM to do this last step, in VB settings of this vm:
+    Settings > Network > adapter 2 > check 'enable network adapter' and chose the Vboxnet# you just created
+Then reboot, stop undesired services (you can see what's up typing)
+$ service --status-all
+and execute part2.sh !"
