@@ -105,12 +105,6 @@ You can now connect to remote-host via ssh by typing
 $ $PERSO@192.168.56.2 -p2223
 "
 
-echo "\033[33mOn VirtualBox: setup a fixed IP with a subnet-netmask /30\033[0m"
-echo "- Go to File > Host network manager
-- Create a Vboxnet#, disabled DHCP checkbox and set iPv4 Network Mask to 255.255.255.252
-[the simplest way - the fixed ip set should be 192.168.56.1]\n
-- Shutdown VM to do this last step, in VB settings of this vm:
-    Settings > Network > adapter 2 > check 'enable network adapter' and chose the Vboxnet# you just created
-Then reboot, stop undesired services (you can see what's up typing)
+echo "\033[33mOn Then reboot, stop undesired services (you can see which one are running typing)
 $ service --status-all
-and execute part2.sh !"
+and execute part2.sh !/30\033[0m"

@@ -34,7 +34,7 @@ Edit /etc/ssmtp/ssmtp.conf
 $ vim /etc/ssmtp/ssmtp.conf
 '
   root=username@ethereal.email
-  mailhub:smtp.ethereal.email:587
+  mailhub=smtp.ethereal.email:587
   UseSTARTTLS=YES
   FromLineOverride=YES
   AuthUser=ethereal_account_username
