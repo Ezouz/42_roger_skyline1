@@ -5,40 +5,43 @@ banaction = ufw
 
 [sshd]
 enabled = true
-port    = 2222
+port    = 2223
 logpath = %(sshd_log)s
 backend = %(sshd_backend)s
+maxretry = 5
+bantime = 600
 
 [nginx-http-auth]
 enabled = true
 port    = http,https
-logpath = %(nginx_error_log)s
+logpath = /var/log/nginx/error.log
+findtime = 120
+maxretry = 3
+bantime = 600
 
 [nginx-limit-req]
 enabled = true
 port    = http,https
-logpath = %(nginx_error_log)s
+logpath = /var/log/nginx/error.log
+maxretry = 9
+findtime = 300
+bantime = 600
 
 [nginx-botsearch]
 enabled = true
 port     = http,https
-logpath  = %(nginx_error_log)s
-maxretry = 2
+logpath  = /var/log/nginx/error.log
+maxretry = 3
+findtime = 120
+bantime = 600
 
-[nginx-req-limit]
-enabled = true
-filter = nginx-req-limit
-action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
-logpath = /var/log/nginx/*error.log
-findtime = 600
-bantime = 7200
-maxretry = 10
+[ufwscanban]
+enabled  = true
+filter   = ufwscanban
+logpath  = /var/log/ufw.log
+action   = ufw
+maxretry = 5
+findtime = 60
 
-[nginx-conn-limit]
+[recidive]
 enabled = true
-filter = nginx-conn-limit
-action = iptables-multiport[name=ReqLimit, port="http,https", protocol=tcp]
-logpath = /var/log/nginx/*error.log
-findtime = 300
-bantime = 7200
-maxretry = 100
