@@ -8,7 +8,7 @@ enabled = true
 port    = 2223
 logpath = %(sshd_log)s
 backend = %(sshd_backend)s
-maxretry = 5
+maxretry = 3
 bantime = 600
 
 [nginx-http-auth]
@@ -23,8 +23,8 @@ bantime = 600
 enabled = true
 port    = http,https
 logpath = /var/log/nginx/error.log
-maxretry = 9
-findtime = 300
+maxretry = 3
+findtime = 120
 bantime = 600
 
 [nginx-botsearch]
@@ -39,9 +39,33 @@ bantime = 600
 enabled  = true
 filter   = ufwscanban
 logpath  = /var/log/ufw.log
-action   = ufw
-maxretry = 5
+maxretry = 3
 findtime = 60
+bantime = 600
+
+[nginx-http-403]
+enabled = true
+port    = http,https
+filter  = nginx-http-403
+logpath = /var/log/nginx/access.log
+maxretry = 9
+findtime = 300
+
+[nginx-http-400]
+enabled = true
+port    = http,https
+filter  = nginx-http-400
+logpath = /var/log/nginx/access.log
+maxretry = 9
+findtime = 300
+
+[nginx-http-408]
+enabled = true
+port    = http,https
+filter  = nginx-http-408
+logpath = /var/log/nginx/access.log
+maxretry = 9
+findtime = 300
 
 [recidive]
 enabled = true

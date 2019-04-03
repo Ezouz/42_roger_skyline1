@@ -2,18 +2,10 @@
 echo "\033[33mConfiguration of the UNIX OS Ubuntu 18.4\033[0m"
 echo "\033[33mYOU MUST BE ROOT TO PERFORM THIS OPERATION\033[0m"
 echo"\033[31mPlease enter your personal username:\033[0m"
-read -p 'your username: ' new_user
-while true; do
-  if ! [[ ${new_user} =~ ^[a-z0-9_-]{2,10}$ ]];
-  then
-    echo "\nThis is not a correct username"
-    echo "(Regex for a valid username : ^[a-z0-9_-]{2,10}$)"
-    echo "Please try again."
-    read -p 'your username: ' new_user
-    break
-   else
-     echo "Ok"
-   fi
+while ! [[ "$new_user" =~ ^[a-z]{2,20}$ ]] || [[ $new_user == '' ]]
+do
+    read -p 'username: ' new_user
+    echo "associated regex: [a-z]{2,20}"
 done
 read -p 'Configuration for $new_user, press enter'
 sudo adduser $new_user
@@ -63,9 +55,16 @@ chmod 644 /etc/fail2ban/jail.local
 # fail2ban with UFW
 cp config/ufw.conf /etc/fail2ban/action.d/ufw.conf
 chmod 644 /etc/fail2ban/action.d/ufw.conf
-# fail2ban filter
+# fail2ban filters
 cp config/ufwscanban.conf /etc/fail2ban/filter.d/ufwscanban.conf
 chmod 644 /etc/fail2ban/filter.d/ufwscanban.conf
+cp config/nginx-http-400.conf /etc/fail2ban/filter.d/nginx-http-400.conf
+chmod 644 /etc/fail2ban/filter.d/nginx-http-400.conf
+cp config/nginx-http-403.conf /etc/fail2ban/filter.d/nginx-http-403.conf
+chmod 644 /etc/fail2ban/filter.d/nginx-http-403.conf
+cp config/nginx-http-408.conf /etc/fail2ban/filter.d/nginx-http-408.conf
+chmod 644 /etc/fail2ban/filter.d/nginx-http-408.conf
+
 # Portsentry conf
 echo "\033[33mSetting up portsentry\033[0m"
 cp config/portsentry /etc/default/portsentry
