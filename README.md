@@ -16,6 +16,6 @@ partitioned:
 2.2Go SWAP
 1.986Go /home
 
-go into a repo and run the scripts
-  - part1.sh setup Network and Security
-  - part2.sh setup Nginx server web
+YOU MUST BE ROOT TO RUN THE SCRIPTS
+
+run ./deploy.sh

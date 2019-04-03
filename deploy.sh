@@ -1,13 +1,13 @@
-#!/bin/bash
-echo "\033[33mConfiguration of the UNIX OS Ubuntu 18.4\033[0m"
+#!/bin/sh
+echo "\033[34m\033[45mConfiguration of the UNIX OS Ubuntu 18.4\033[0m"
 echo "\033[33mYOU MUST BE ROOT TO PERFORM THIS OPERATION\033[0m"
-echo"\033[31mPlease enter your personal username:\033[0m"
+echo "\033[31mPlease enter your personal username:\033[0m"
 while ! [[ "$new_user" =~ ^[a-z]{2,20}$ ]] || [[ $new_user == '' ]]
 do
     read -p 'username: ' new_user
     echo "associated regex: [a-z]{2,20}"
 done
-read -p 'Configuration for $new_user, press enter'
+read -p 'Configuration please, press enter'
 sudo adduser $new_user
 # update system
 echo "\033[33mAPT update/upgrade & installation of required packages\033[0m"
@@ -26,7 +26,7 @@ adduser $new_user sudo
 echo "\033[33mSetting up netplan...\033[0m"
 cp config/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml
 chmod 644 /etc/netplan/50-cloud-init.yaml
-
+netplan apply
 # Change SSH port
 echo "\033[33mSSH configuration:\033[0m"
 echo "\033[33mUncomment '# Port 22' on line 13: change the number to 2223\033[0m"
@@ -91,13 +91,47 @@ crontab -l > mycron
 echo "0 4 * * 1 sh /etc/cron.d/scripts/packages.sh" >> mycron
 echo "@reboot sh /etc/cron.d/scripts/packages.sh" >> mycron
 # Alerte en cas de modification de crontab
-echo "0 0 * * * /etc/cron.d/scripts/survey.sh" >> mycron
+echo "0 0 * * * sh /etc/cron.d/scripts/survey.sh" >> mycron
 #install new cron file
 crontab mycron
 rm mycron
 
-echo "\033[33mReload nginx configuration\033[0m"
-service nginx restart
+# UFW allow nginx
+echo "\033[33mAllow Nginx connections\033[0m"
+ufw allow 'Nginx Full'
+
+# create ssl certificates
+echo "\033[33mCreating auto-signed ssl... Please fill the following form\033[0m"
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+echo "\033[33mCreating dh group...\033[0m"
+openssl dhparam -out /etc/nginx/dhparam.pem 512
+
+# create snippets
+echo "\033[33mCreating a file /etc/nginx/snippets/self-signed.conf...\033[0m"
+touch /etc/nginx/snippets/self-signed.conf
+sh -c "echo 'ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;\nssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;' > /etc/nginx/snippets/self-signed.conf"
+
+# cypher for ssl security
+echo "\033[33mCreating a file ssl-params.conf in /etc/nginx/snippets/...\033[0m"
+cp config/ssl-params.conf /etc/nginx/snippets/
+chmod 644 /etc/nginx/snippets/ssl-params.conf
+
+echo "\033[33mCreating a file /etc/nginx/sites-available/landing.conf...\033[0m"
+cp config/landing.conf /etc/nginx/sites-available/
+# Link 2 files and remove the default one
+ln -s /etc/nginx/sites-available/landing.conf /etc/nginx/sites-enabled/landing.conf
+rm -rf /etc/nginx/sites-enabled/default
+
+# Restart nginx
+echo "\033[33mReloading nginx...\033[0m"
+systemctl restart nginx
+echo "\033[33mnginx status\033[0m"
+systemctl status nginx
+
+# Propose a vitrine website
+echo "\033[33mLoading website...\033[0m"
+cp -R landing /var/www/
+
 echo "\033[33mReload Fail2ban configuration\033[0m"
 fail2ban-client reload
 echo "\033[33mFail2ban status\033[0m"
@@ -106,6 +140,8 @@ echo "\033[33mReload Portsentry configuration\033[0m"
 service portsentry restart
 echo "\033[Portsentry status\033[0m"
 service portsentry status
+echo "\033[33mReload nginx configuration\033[0m"
+service nginx restart
 
 echo "\033[33mAutomatic configuration done\033[0m"
 echo "\033[33m\n\nPlease complete the SSH configuration for the public key authentication by following those guidelines.\n\033[0m"
