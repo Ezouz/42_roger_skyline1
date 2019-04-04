@@ -38,7 +38,7 @@ bantime = 600
 [ufwscanban]
 enabled  = true
 filter   = ufwscanban
-logpath  = /var/log/ufwscanban.log
+logpath  = /var/log/ufw.log
 maxretry = 3
 findtime = 60
 bantime = 1800
