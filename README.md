@@ -17,5 +17,10 @@ partitioned:
 1.986Go /home
 
 YOU MUST BE ROOT TO RUN THE SCRIPTS
-
-run ./deploy.sh
+-- without the $, run command --
+$ sudo -i
+then type
+$ git clone https://github.com/Ezouz/42_roger_skyline1.git
+$ cd 42_roger_skyline1
+and run
+$ sh deploy.sh
