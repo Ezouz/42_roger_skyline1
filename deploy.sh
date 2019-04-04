@@ -36,6 +36,8 @@ service ssh restart
 
 # UFW
 echo "Setting up UFW firewall..."
+cp config/before.rules /etc/ufw/before.rules
+chmod 640 /etc/ufw/before.rules
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow 2223/tcp
@@ -67,13 +69,15 @@ cp config/nginx-http-403.conf /etc/fail2ban/filter.d/nginx-http-403.conf
 chmod 644 /etc/fail2ban/filter.d/nginx-http-403.conf
 cp config/nginx-http-408.conf /etc/fail2ban/filter.d/nginx-http-408.conf
 chmod 644 /etc/fail2ban/filter.d/nginx-http-408.conf
+cp config/sshd.conf /etc/fail2ban/filter.d/sshd.conf
+chmod 644 /etc/fail2ban/filter.d/sshd.conf
 
 # Portsentry conf
 echo "Setting up portsentry"
-cp config/portsentry /etc/default/portsentry
-chmod 644 /etc/default/portsentry
-cp config/portsentry.conf /etc/portsentry/portsentry.conf
-chmod 644 /etc/portsentry/portsentry.conf
+#cp config/portsentry /etc/default/portsentry
+#chmod 644 /etc/default/portsentry
+#cp config/portsentry.conf /etc/portsentry/portsentry.conf
+#chmod 644 /etc/portsentry/portsentry.conf
 
 # configure mail to root
 echo "Setting up root emails"

@@ -29,3 +29,5 @@ $ sudo service portsentry restart
 
 $ sudo fail2ban-client set ufwscanban unbanip 192.168.56.1
 $ sudo fail2ban-client status ufwscanban
+
+$ sudo iptables -L -n | awk '$1=="REJECT" && $4!="0.0.0.0/0"'
