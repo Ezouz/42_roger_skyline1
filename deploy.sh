@@ -1,13 +1,12 @@
 #!/bin/bash
 echo "Configuration of the UNIX OS Ubuntu 18.4"
 echo "YOU MUST BE ROOT TO PERFORM THIS OPERATION"
-echo "\033[31mPlease enter your personal username:"
+echo "Please enter your personal username:"
 while ! [[ "$new_user" =~ ^[a-z]{2,20}$ ]] || [[ $new_user == '' ]]
 do
     read -p 'username: ' new_user
     echo "associated regex: [a-z]{2,20}"
 done
-read -p 'Configuration please, press enter'
 sudo adduser $new_user
 # update system
 echo "Update/upgrade & installation of required packages"
@@ -30,6 +29,7 @@ netplan apply
 # Change SSH port
 echo "SSH configuration:"
 echo "Uncomment '# Port 22' on line 13: change the number to 2223"
+echo "then press escape and ':wq' to save and exit"
 read -p 'Press enter to edit the config file'
 vim /etc/ssh/sshd_config
 service ssh restart
@@ -40,6 +40,7 @@ ufw default deny incoming
 ufw default allow outgoing
 ufw allow 2223/tcp
 ufw enable
+ufw logging on
 echo "UFW firewall status"
 ufw status
 
@@ -56,6 +57,8 @@ chmod 644 /etc/fail2ban/jail.local
 cp config/ufw.conf /etc/fail2ban/action.d/ufw.conf
 chmod 644 /etc/fail2ban/action.d/ufw.conf
 # fail2ban filters
+touch /var/log/ufwscanban.log
+chmod 644 /var/log/ufwscanban.log
 cp config/ufwscanban.conf /etc/fail2ban/filter.d/ufwscanban.conf
 chmod 644 /etc/fail2ban/filter.d/ufwscanban.conf
 cp config/nginx-http-400.conf /etc/fail2ban/filter.d/nginx-http-400.conf
@@ -132,6 +135,8 @@ systemctl status nginx
 echo "Loading website..."
 cp -R landing /var/www/
 
+echo "Reload Portsentry configuration"
+service ufw restart
 echo "Reload Fail2ban configuration"
 fail2ban-client reload
 echo "Fail2ban status"
@@ -144,7 +149,11 @@ echo "Reload nginx configuration"
 service nginx restart
 
 echo "Automatic configuration done"
-echo "\n\nPlease complete the SSH configuration for the public key authentication by following those guidelines.\n"
+echo "
+
+
+Please complete the SSH configuration for the public key authentication by following those guidelines.
+"
 echo "-- run the command without the $ --
 On host:
 $ ssh-keygen

@@ -38,10 +38,10 @@ bantime = 600
 [ufwscanban]
 enabled  = true
 filter   = ufwscanban
-logpath  = /var/log/ufw.log
+logpath  = /var/log/ufwscanban.log
 maxretry = 3
-findtime = 60
-bantime = 600
+findtime = 120
+bantime = 1800
 
 [nginx-http-403]
 enabled = true

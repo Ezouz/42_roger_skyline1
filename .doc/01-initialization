@@ -47,6 +47,7 @@ $ apt list --installed
 
 Check running services
 $ service --status-all
+$ cat /etc/services | less
 
 Lister open ports
 $ sudo netstat -paunt
